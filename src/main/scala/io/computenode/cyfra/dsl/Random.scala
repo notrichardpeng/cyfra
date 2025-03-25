@@ -41,3 +41,12 @@ object Random:
       val x = r * cos(a2)
       val y = r * sin(a2)
       ((x, y, z2), seed2)
+
+  given Generator[Vec2[Float32]] with
+    def gen(seed: UInt32): (Vec2[Float32], UInt32) =
+      val floatGenerator = summon[Generator[Float32]]
+      val (a, seed1) = floatGenerator.gen(seed)      
+      val angle = a * 2.0f * math.Pi.toFloat      
+      val x = cos(angle)
+      val y = sin(angle)
+      ((x, y), seed1)
